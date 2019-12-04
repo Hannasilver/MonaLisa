@@ -1,0 +1,74 @@
+﻿@model HDipl_Hanna3.Models.Clients
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Clients</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Employee.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employee.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Service.ServiceDescritption)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Service.ServiceDescritption)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AppointmentDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AppointmentDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailAddress)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
