@@ -6,9 +6,23 @@
 
 <h2>Index</h2>
 
-<p>
+@*<p>
     @Html.ActionLink("Create New", "Create")
-</p>
+@*</p>*@*
+<div style="margin-left: 150px"><h3>Our Team</h3></div>
+<div style="padding:30px; margin-left:100px">
+    <img src="@Url.Content("~/Content/themes/images/Beautician1.jpg")" width="400" height="200" alt="Amanda" style="float:left" /> <h4 style="margin-left:450px">Amanda is a very experienced Aesthetician with over 10 years experience in IPL, Laser and various Pigmentation /Rosacea and Thread vein treatments .  She started working with Dundrum Cosmetic Clinic over 3 years ago.  She is particularly passionate about skin and is results driven with experience in advanced skincare including Microneedling.She continuously receives ongoing advanced Laser training and is expert in Fungal Nail Treatments.</h4>
+
+</div>
+
+<div style="padding-top:30px; margin-left:130px">
+    <img src="@Url.Content("~/Content/themes/images/Beautician3.jpg")" width="400" height="200"  alt="Agata" style="float:left" /><h4 style="margin-left:450px">
+    Agata - Head Therapist - I am truly passionate about my business and the service that I and each member of our staff provides.  I believe in excellence in everything we do and continue to maintain our 5 star awards at Core Health and Beauty each and everyday.
+
+    We have many assets as a team, working well under pressure while maintaining a calm and relaxing atmosphere throughout our treatments.   My true loves of the beauty industry are preforming my signature IPL Laser Skin Rejuvenation Facial, bridal make up, contoured airbrush spray tanning and HD Brow threading.
+</h4>
+
+    </div>
 <table class="table">
     <tr>
         <th>
@@ -20,20 +34,21 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Surname)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.EmployeeId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.EmployeeId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.EmployeeId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            @*<td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.EmployeeId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeId })
+            </td>*@
+        </tr>
+    }
 
 </table>

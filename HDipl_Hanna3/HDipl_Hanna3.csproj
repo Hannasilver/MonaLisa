@@ -241,6 +241,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\themes\images\Beautician1.jpg" />
+    <Content Include="Content\themes\images\Beautician2.jpg" />
+    <Content Include="Content\themes\images\Beautician3.JPG" />
     <Content Include="Content\themes\images\dermapen.jpg" />
     <Content Include="Content\themes\images\face.jpg" />
     <Content Include="Content\themes\images\background1.jpg" />
