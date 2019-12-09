@@ -6,11 +6,9 @@
 
 <h2>Create</h2>
 
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <div><h4>This appointment date is already taken, please try again</h4></div>
 
     <div class="form-horizontal">
         <h4>Clients</h4>
@@ -80,6 +78,61 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@*<div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqryUi")
+
+    <script src="~/Scripts/jquery-ui-timepicker-addon.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css" type="text/css" />
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.1/jquery.timepicker.min.js"></script> -->
+    <!--
+    <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>//functionalityy date time picker
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.1/jquery.timepicker.min.js"></script>//responsibled for selected time function
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.8.1/jquery.timepicker.min.css" type="text/css" />-->
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-sliderAccess.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.css"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.js"></script>
+
+
+    <link href="~/Content/jquery-ui-timepicker-addon.min.css" rel="stylesheet" />
+
+    <!-- @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqryUi") -->
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input[type=datetime]').datetimepicker({
+                stepMinute: 60,
+                dateFormat: "dd/M/yy",
+                maxTime: '5:00 pm',
+                minTime: '10:00 am',
+                minDate: 0,
+                beforeShowDay: function (date) {
+                    var day = date.getDay();
+                    return [(day != 0 && day != 1)];
+                },
+                numberOfMonths: 2,
+                onTimeChange: function (test) {
+                    console.log(test);
+                }
+            });
+
+
+
+            //$('#timepicker').timepicker();
+
+
+
+        });
+    </script>
+
+}
+

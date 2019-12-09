@@ -25,18 +25,15 @@ namespace HDipl_Hanna3.Tests.Controllers
             Assert.IsNotNull(result);
         }
 
-        [TestMethod]
-        public void About()
+        [TestMethod()]
+        public void AboutTest()
         {
-            // Arrange
-            HomeController controller = new HomeController();
-
-            // Act
-            ViewResult result = controller.About() as ViewResult;
-
-            // Assert
-            Assert.AreEqual("Your application description page.", result.ViewBag.Message);
+            var controller = new HomeController();
+            var result = controller.About();
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
+
 
         [TestMethod]
         public void Contact()

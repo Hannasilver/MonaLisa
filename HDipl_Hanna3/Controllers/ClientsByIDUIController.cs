@@ -10,40 +10,39 @@ using HDipl_Hanna3.Models;
 
 namespace HDipl_Hanna3.Controllers
 {
-    public class ClientsController : Controller
+    public class ClientsByIDUIController : Controller
     {
         private ClientContext db = new ClientContext();
 
-        // GET: Clients
-        //public ActionResult Index()
-        //{
-        //    var client = db.Client.Include(c => c.Employee).Include(c => c.Service);
-        //    return View(client.ToList());
-        //}
+        // GET: ClientsByIDUI
+        
         public ActionResult Index(string sortOrder)
         {
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
             ViewBag.DateSortParm = sortOrder == "Date" ? "Date_desc" : "Date";
             var clients = from c in db.Client
-                           select c;
+                          select c;
             switch (sortOrder)
             {
-                case "Name_desc":
+                case "SeviceId_desc":
                     clients = clients.OrderByDescending(c => c.ServiceId);
                     break;
-                case "Date":
-                    clients = clients.OrderBy(s => s.Name);
+                case "Name":
+                    clients = clients.OrderByDescending(s => s.Name);
                     break;
                 case "Date_desc":
+                    clients = clients.OrderByDescending(s => s.AppointmentDate);
+                    break;
+                case "Surname_desc":
                     clients = clients.OrderByDescending(s => s.Surname);
                     break;
                 default:
-                    clients = clients.OrderBy(s => s.AppointmentDate);
+                    clients = clients.OrderBy(s => s.ID);
                     break;
             }
             return View(clients.ToList());
         }
-        // GET: Clients/Details/5
+        // GET: ClientsByIDUI/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -58,7 +57,7 @@ namespace HDipl_Hanna3.Controllers
             return View(clients);
         }
 
-        // GET: Clients/Create
+        // GET: ClientsByIDUI/Create
         public ActionResult Create()
         {
             ViewBag.EmployeeId = new SelectList(db.Employee, "EmployeeId", "FirstName");
@@ -66,71 +65,27 @@ namespace HDipl_Hanna3.Controllers
             return View();
         }
 
-        // POST: Clients/Create
+        // POST: ClientsByIDUI/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,AppointmentDate,ServiceId,EmployeeId,Name,Surname,PhoneNumber,EmailAddress")] Clients clinets)
+        public ActionResult Create([Bind(Include = "ID,AppointmentDate,ServiceId,EmployeeId,Name,Surname,PhoneNumber,EmailAddress")] Clients clients)
         {
-            ViewBag.ServiceId = new SelectList(db.Service, "ServiceId", "ServiceDescritption", clinets.ServiceId);
-            ViewBag.EmployeeId = new SelectList(db.Employee, "EmployeeId", "FirstName", clinets.EmployeeId);
             if (ModelState.IsValid)
             {
-                var dateAlreadyBooked = false;
-                var employeeBooked = false;
-
-                db.Client.ToList().ForEach(c =>
-               {
-                   if (c.AppointmentDate == clinets.AppointmentDate )
-                       dateAlreadyBooked = true;
-                   if (c.EmployeeId == clinets.EmployeeId)
-                       _ = employeeBooked == true;
-
-               });
-                if (dateAlreadyBooked)
-                {
-                    clinets.errorMessage = $"This date {clinets.AppointmentDate} is already taken. Please try again";
-                    return View("~/Views/ClientsErrorRedirect/Create.cshtml");
-                }
-                db.Client.Add(clinets);
+                db.Client.Add(clients);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //ViewBag.EmployeeId = new SelectList(db.Employee, "EmployeeId", "FirstName", clients.EmployeeId);
-            //ViewBag.ServiceId = new SelectList(db.Service, "ServiceId", "ServiceDescritption", clients.ServiceId);
-            return View(clinets);
+
+            ViewBag.EmployeeId = new SelectList(db.Employee, "EmployeeId", "FirstName", clients.EmployeeId);
+            ViewBag.ServiceId = new SelectList(db.Service, "ServiceId", "ServiceDescritption", clients.ServiceId);
+            return View(clients);
         }
 
-
-
-        //               if (ModelState.IsValid)
-        //{
-        //    var dateAlreadyBooked = false;
-        //    db.Client.ToList().ForEach(c =>
-        //   {
-        //       if (c.AppointmentDate == clients.AppointmentDate)
-        //           dateAlreadyBooked = true;
-        //   });
-        //    if (dateAlreadyBooked)
-        //    {
-        //        clients.errorMessage = $"This date {clients.AppointmentDate} is already taken. Please try again";
-        //        return View(clients);
-        //    }
-        //    db.Client.Add(clients);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
-
-        //ViewBag.EmployeeId = new SelectList(db.Employee, "EmployeeId", "FirstName", clients.EmployeeId);
-        //    ViewBag.ServiceId = new SelectList(db.Service, "ServiceId", "ServiceDescritption", clients.ServiceId);
-        //    return View(clients);
-        //}
-
-
-
-            // GET: Clients/Edit/5
-            public ActionResult Edit(int? id)
+        // GET: ClientsByIDUI/Edit/5
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -146,7 +101,7 @@ namespace HDipl_Hanna3.Controllers
             return View(clients);
         }
 
-        // POST: Clients/Edit/5
+        // POST: ClientsByIDUI/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -164,7 +119,7 @@ namespace HDipl_Hanna3.Controllers
             return View(clients);
         }
 
-        // GET: Clients/Delete/5
+        // GET: ClientsByIDUI/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -179,7 +134,7 @@ namespace HDipl_Hanna3.Controllers
             return View(clients);
         }
 
-        // POST: Clients/Delete/5
+        // POST: ClientsByIDUI/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

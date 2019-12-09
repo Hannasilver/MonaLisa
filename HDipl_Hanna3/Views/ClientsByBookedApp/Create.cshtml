@@ -7,11 +7,10 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    <div><h4>This appointment date is already taken, please try again</h4></div>
-
+    
     <div class="form-horizontal">
         <h4>Clients</h4>
         <hr />
@@ -83,3 +82,7 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

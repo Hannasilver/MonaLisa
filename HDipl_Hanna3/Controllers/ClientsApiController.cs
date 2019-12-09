@@ -1,136 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
-using System.Web.Mvc;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Http;
+
+using System.Text.RegularExpressions;
 using HDipl_Hanna3.Models;
+
 
 namespace HDipl_Hanna3.Controllers
 {
-    public class ClientsApiController : Controller
+    //[RoutePrefix("api/ClientsAPI")]
+    public class ClientsApiController : ApiController
     {
-        private ClientContext db = new ClientContext();
+        private readonly ClientContext db = new ClientContext();
 
         // GET: ClientsApi
-        public ActionResult Index()
+        //[Route("all/clients")]
+        [HttpGet]
+
+        public IHttpActionResult GetAllClients()
         {
-            var client = db.Client.Include(c => c.Employee).Include(c => c.Service);
-            return View(client.ToList());
+            return Ok(db.Client.OrderByDescending(c => c.ID).ToList());
+
         }
 
         // GET: ClientsApi/Details/5
-        public ActionResult Details(int? id)
+        [Route("ByClient/{name}")]
+        [HttpGet]
+        public IEnumerable<string> GetByKeyWord(string name)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Clients clients = db.Client.Find(id);
-            if (clients == null)
-            {
-                return HttpNotFound();
-            }
-            return View(clients);
-        }
+            int clientID = db.Client.FirstOrDefault(p => p.Name.Equals(name)).ID;
 
-        // GET: ClientsApi/Create
-        public ActionResult Create()
-        {
-            ViewBag.EmployeeId = new SelectList(db.Employee, "EmployeeId", "FirstName");
-            ViewBag.ServiceId = new SelectList(db.Service, "ServiceId", "ServiceDescritption");
-            return View();
-        }
-
-        // POST: ClientsApi/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,AppointmentDate,ServiceId,EmployeeId,Name,Surname,PhoneNumber,EmailAddress")] Clients clients)
-        {
-            if (ModelState.IsValid)
+            var results = db.Client.Where(p => p.ID.Equals(clientID));
+            if (results == null)
             {
-                db.Client.Add(clients);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return null;
             }
 
-            ViewBag.EmployeeId = new SelectList(db.Employee, "EmployeeId", "FirstName", clients.EmployeeId);
-            ViewBag.ServiceId = new SelectList(db.Service, "ServiceId", "ServiceDescritption", clients.ServiceId);
-            return View(clients);
-        }
+            List<string> ClientList = new List<string>();
+            foreach (Clients d in results)
+            {
+                ClientList.Add(d.PhoneNumber);
+                ClientList.Add(d.Name);
+                ClientList.Add(d.Surname);
 
-        // GET: ClientsApi/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Clients clients = db.Client.Find(id);
-            if (clients == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.EmployeeId = new SelectList(db.Employee, "EmployeeId", "FirstName", clients.EmployeeId);
-            ViewBag.ServiceId = new SelectList(db.Service, "ServiceId", "ServiceDescritption", clients.ServiceId);
-            return View(clients);
-        }
+            return ClientList;
 
-        // POST: ClientsApi/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,AppointmentDate,ServiceId,EmployeeId,Name,Surname,PhoneNumber,EmailAddress")] Clients clients)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(clients).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.EmployeeId = new SelectList(db.Employee, "EmployeeId", "FirstName", clients.EmployeeId);
-            ViewBag.ServiceId = new SelectList(db.Service, "ServiceId", "ServiceDescritption", clients.ServiceId);
-            return View(clients);
-        }
-
-        // GET: ClientsApi/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Clients clients = db.Client.Find(id);
-            if (clients == null)
-            {
-                return HttpNotFound();
-            }
-            return View(clients);
-        }
-
-        // POST: ClientsApi/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Clients clients = db.Client.Find(id);
-            db.Client.Remove(clients);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }
+

@@ -1,18 +1,17 @@
 ﻿@model IEnumerable<HDipl_Hanna3.Models.Clients>
 
-
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Index</h2>
-
 <div style="padding-left: 60px">
     <h4>You have successfully booked your appointment with MonaLisa Beauty!</h4>
 </div>
+
 <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
+    @Html.ActionLink("Create New", "Create")
+</p>
 <table class="table">
     <tr>
 
@@ -26,21 +25,21 @@
             @Html.DisplayNameFor(model => model.Surname)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EmailAddress)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Employee.FirstName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Service.ServiceDescritption)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailAddress)
+        </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model)
+    @foreach (var item in Model.Take(1))
     {
 <tr>
 
@@ -54,27 +53,28 @@
         @Html.DisplayFor(modelItem => item.Surname)
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.PhoneNumber)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.EmailAddress)
-    </td>
-    <td>
         @Html.DisplayFor(modelItem => item.Employee.FirstName)
     </td>
     <td>
         @Html.DisplayFor(modelItem => item.Service.ServiceDescritption)
     </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PhoneNumber)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.EmailAddress)
+    </td>
+
+    
     @*<td>
             @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
             @Html.ActionLink("Details", "Details", new { id = item.ID }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.ID })
         </td>*@
 </tr>
-     }
+    }
 
-        </table>
+</table>
 <div style="padding:20px; margin-left:40px">
     <img src="@Url.Content("~/Content/themes/images/rose.jpg")" width="450" height="400" style="column-fill:balance" alt="Blonde" />
-
 </div>
